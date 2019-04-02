@@ -8,8 +8,8 @@ const connection = require('../db/connection');
 
 const request = supertest(app);
 
-describe('/', () => {
-  // beforeEach(() => connection.seed.run());
+describe.only('/', () => {
+  beforeEach(() => connection.seed.run());
   after(() => connection.destroy());
 
   describe('/api', () => {
