@@ -54,6 +54,14 @@ describe.only("/", () => {
       it('GET status: 200', () => {
         return request.get('/api/articles/1').expect(200);
       });
+      it('GET status: 200 responds with an article object', () => {
+        return request
+          .get('/api/articles/1')
+          .expect(200)
+          .then(({body: {article} }) => {
+            expect(article).to.contain.keys('title', 'topic', 'author', 'body', 'created_at', 'votes')
+          })
+      })
     });
   });
 });
