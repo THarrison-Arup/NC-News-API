@@ -43,5 +43,13 @@ describe.only("/", () => {
           expect(msg).to.equal("OK from the articles router");
         });
     });
+    it("GET status: 200 responds with an array of articles", () => {
+      return request
+        .get("/api/articles")
+        .expect(200)
+        .then(({ body: { articles } }) => {
+          expect(articles).to.be.an("array");
+        });
+    });
   });
 });
