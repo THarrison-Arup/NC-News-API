@@ -69,6 +69,15 @@ describe.only("/", () => {
           });
         });
     });
+    it("GET status: 200 responds with an array of article object with a sort_by query", () => {
+      return request
+        .get("/api/articles?sort_by=title")
+        .expect(200)
+        .then(({ body: { articles } }) => {
+          console.log(articles[0]);
+          expect(articles[0]['article_id']).to.equal(6);
+        });
+    });
 
     describe("/api/articles/:article_id", () => {
       it("GET status: 200", () => {
