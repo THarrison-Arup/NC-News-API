@@ -1,6 +1,6 @@
 const express = require('express');
 const apiRouter = require('./routes/api');
-const topicsRouter = require('./routes/topicsRouter');
+const topicsRouter = require('./routes/topics');
 const { routeNotFound, handle500 } = require('./errors');
 
 const app = express();
