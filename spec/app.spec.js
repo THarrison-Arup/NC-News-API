@@ -49,19 +49,36 @@ describe.only("/", () => {
           expect(articles).to.be.an("array");
         });
     });
-    
-    describe('/api/articles/:article_id', () => {
-      it('GET status: 200', () => {
-        return request.get('/api/articles/1').expect(200);
+    it("GET status: 200 responds with an array of article objects with an author query", () => {
+      return request
+        .get("/api/articles?author=butter_bridge")
+        .expect(200)
+        .then(({ body: { articles } }) => {
+          articles.forEach(article => {
+            expect(article.author).to.equal('butter_bridge');
+          });
+        });
+    });
+
+    describe("/api/articles/:article_id", () => {
+      it("GET status: 200", () => {
+        return request.get("/api/articles/1").expect(200);
       });
-      it('GET status: 200 responds with an article object', () => {
+      it("GET status: 200 responds with an article object", () => {
         return request
-          .get('/api/articles/1')
+          .get("/api/articles/1")
           .expect(200)
-          .then(({body: {article} }) => {
-            expect(article).to.contain.keys('title', 'topic', 'author', 'body', 'created_at', 'votes')
-          })
-      })
+          .then(({ body: { article } }) => {
+            expect(article).to.contain.keys(
+              "title",
+              "topic",
+              "author",
+              "body",
+              "created_at",
+              "votes"
+            );
+          });
+      });
     });
   });
 });
