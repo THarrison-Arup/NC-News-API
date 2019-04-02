@@ -1,4 +1,5 @@
 const { articleData, commentData, topicData, userData } = require("../data");
+const { timestampToDate } = require("../../utils/utils");
 
 exports.seed = (knex, Promise) => {
   return knex.migrate
@@ -17,13 +18,13 @@ exports.seed = (knex, Promise) => {
     })
     .then(([topicRows, userRows]) => {
       const articleInsertions = knex("articles")
-        .insert(articleData)
-        .returning("*");
+      .insert(timestampToDate(articleData))
+      .returning("*");
       return Promise.all([topicRows, userRows, articleInsertions]);
     })
     .then(([topicRows, userRows, articleRows]) => {
       const commentInsertions = knex("comments")
-        .insert(commentData)
+        .insert(timestampToDate(commentData))
         .returning("*");
       return Promise.all([topicRows, userRows, articleRows, commentInsertions]);
     });

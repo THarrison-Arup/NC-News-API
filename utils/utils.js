@@ -1,10 +1,15 @@
-const timestampToDate = (obj) => {
+const timestampToDate = arr => {
+  console.log(arr);
+  
+  let newData = [];
 
-
-let date = new Date(1542284514171);
-console.log(date);
-
+  arr.forEach(obj => {
+    obj['created_at'] = new Date(obj['created_at']);
+    delete obj.timestamp;
+    newData.push(obj);
+  })
+  
+  return newData;
 };
 
-timestampToDate();
 module.exports = { timestampToDate };
