@@ -74,8 +74,15 @@ describe.only("/", () => {
         .get("/api/articles?sort_by=title")
         .expect(200)
         .then(({ body: { articles } }) => {
-          console.log(articles[0]);
-          expect(articles[0]['article_id']).to.equal(6);
+          expect(articles[0]["article_id"]).to.equal(7);
+        });
+      });
+      it("GET status: 200 responds with an array of article objects with a sort order", () => {
+        return request
+        .get("/api/articles?sort_by=title&&order=asc")
+        .expect(200)
+        .then(({ body: { articles } }) => {
+          expect(articles[0]["article_id"]).to.equal(6);
         });
     });
 
