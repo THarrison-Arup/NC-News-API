@@ -49,5 +49,11 @@ describe.only("/", () => {
           expect(articles).to.be.an("array");
         });
     });
+    
+    describe('/api/articles/:article_id', () => {
+      it('GET status: 200', () => {
+        return request.get('/api/articles/1').expect(200);
+      });
+    });
   });
 });
