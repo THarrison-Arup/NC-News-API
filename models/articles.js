@@ -5,7 +5,7 @@ exports.fetchArticles = ({ author, topic, sort_by, order }) => {
   .select( '*' )
   .where((query) => {
     if(author) query.where({author});
-    
+    if(topic) query.where({topic});
   });
 };
 

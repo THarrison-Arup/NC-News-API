@@ -55,7 +55,17 @@ describe.only("/", () => {
         .expect(200)
         .then(({ body: { articles } }) => {
           articles.forEach(article => {
-            expect(article.author).to.equal('butter_bridge');
+            expect(article.author).to.equal("butter_bridge");
+          });
+        });
+    });
+    it("GET status: 200 responds with an array of article objects with a topic query", () => {
+      return request
+        .get("/api/articles?topic=mitch")
+        .expect(200)
+        .then(({ body: { articles } }) => {
+          articles.forEach(article => {
+            expect(article.topic).to.equal("mitch");
           });
         });
     });
