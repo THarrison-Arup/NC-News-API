@@ -1,12 +1,19 @@
 const knex = require('../db/connection');
 
-exports.fetchArticles = (articles) => {
+exports.fetchArticles = ({ author, topic, sort_by, order }) => {
   return knex('articles')
-  .select( '*' );
+  .select( '*' )
+  .where((query) => {
+    if(author) query.where({author});
+    
+  });
 };
 
 exports.fetchArticleById = (article) => {
-  console.log(article);
   return knex('articles')
     .select( '*' );
+};
+
+exports.updateArticle = (article) => {
+
 };
