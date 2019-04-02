@@ -1,4 +1,4 @@
-const { fetchArticles, fetchArticleById } = require("../models/articles");
+const { fetchArticles, fetchArticleById, updateArticle } = require("../models/articles");
 
 exports.sendArticles = (req, res, next) => {
 // const { author, topic, sort_by, order } = req.query
@@ -14,5 +14,7 @@ exports.sendArticleById = (req, res, next) => {
 };
 
 exports.updateArticleById = (req, res, next) => {
-
+  updateArticle(req.body).then(article => {
+    res.status(201);
+  });
 };

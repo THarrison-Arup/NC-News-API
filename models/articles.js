@@ -16,5 +16,6 @@ exports.fetchArticleById = (article) => {
 };
 
 exports.updateArticle = (article) => {
-
+  return knex('articles')
+    .select( '*' );
 };

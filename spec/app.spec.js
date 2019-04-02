@@ -105,6 +105,9 @@ describe.only("/", () => {
             );
           });
       });
+      it('GET status: 201', () => {
+        return request.patch('/api/articles/1').expect(201)
+      });
     });
   });
 });
