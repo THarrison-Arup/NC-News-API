@@ -36,12 +36,7 @@ describe.only("/", () => {
 
   describe("/api/articles", () => {
     it("GET status: 200", () => {
-      return request
-        .get("/api/articles")
-        .expect(200)
-        .then(({ body: { msg } }) => {
-          expect(msg).to.equal("OK from the articles router");
-        });
+      return request.get("/api/articles").expect(200);
     });
     it("GET status: 200 responds with an array of articles", () => {
       return request

@@ -1,3 +1,7 @@
-const {fetchAllArticles} = require('../models/articles');
+const { fetchArticles } = require("../models/articles");
 
-exports.sendAllArticles = () => {};
+exports.sendArticles = (req, res, next) => {
+  fetchArticles(req.query).then((articles) => {
+    res.status(200).send({ articles });
+  });
+};

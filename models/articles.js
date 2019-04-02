@@ -1,3 +1,6 @@
 const knex = require('../db/connection');
 
-exports.fetchAllArticles = () => {};
+exports.fetchArticles = ({articles}) => {
+  return knex('articles')
+    .select( '*' );
+};
