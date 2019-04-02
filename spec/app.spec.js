@@ -25,11 +25,14 @@ describe.only("/", () => {
 
   describe("/api/topics", () => {
     it("GET status:200", () => {
+      return request.get("/api/topics").expect(200);
+    });
+    it("GET status:200 responds with an array of topics", () => {
       return request
         .get("/api/topics")
         .expect(200)
-        .then(({ body: { msg } }) => {
-          expect(msg).to.equal("OK from the topics router");
+        .then(({ body: { topics } }) => {
+          expect(topics).to.be.an("array");
         });
     });
   });
