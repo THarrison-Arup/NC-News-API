@@ -15,15 +15,19 @@ exports.fetchArticles = ({
     });
 };
 
-exports.fetchArticleById = ({article_id}) => {
+exports.fetchArticleById = ({ article_id }) => {
   return knex("articles")
     .select("*")
     .where(params => {
-      console.log({article_id},'<-- article id')
       if (article_id) params.where({ article_id });
     });
 };
 
-exports.updateArticle = () => {
-  return knex("articles").select("*");
+exports.updateArticle = ({ article_id }) => {
+  return knex("articles")
+    .select("*")
+    .where(params => {
+      console.log({ article_id }, "<-- article id");
+      if (article_id) params.where({ article_id });
+    });
 };

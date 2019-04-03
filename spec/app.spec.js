@@ -95,7 +95,6 @@ describe.only("/", () => {
           .get("/api/articles/3")
           .expect(200)
           .then(({ body: { article } }) => {
-            console.log(article,'<--article by ID')
             expect(article).to.contain.keys(
               "title",
               "topic",
@@ -115,7 +114,7 @@ describe.only("/", () => {
           .patch("/api/articles/2")
           .expect(201)
           .then(({ body: { article } }) => {
-            // console.log(article,'<-- patch article');
+            console.log(article,'<-- patch article');
             expect(article).to.contain.keys(
               "title",
               "topic",
@@ -123,7 +122,8 @@ describe.only("/", () => {
               "body",
               "created_at",
               "votes"
-            );
+            )
+            expect(article.article_id).to.equal(2);
           });
       });
     });
