@@ -171,11 +171,12 @@ describe.only("/", () => {
           });
       });
 
-      describe('/api/articles/:article_id', () => {
-        it('GET status: 400 responds with error message when request is made with a bad ID', () => {
-          return request
-            .get("/api/articles/a")
-            .expect(400);
+      describe("/api/articles/:article_id", () => {
+        it("GET status: 400 responds with error message when request is made with a bad ID", () => {
+          return request.get("/api/articles/a").expect(400);
+        });
+        it("GET status: 404 responds with error message when bad request is made", () => {
+          return request.get("/api/particles/:1").expect(404);
         });
       });
     });
