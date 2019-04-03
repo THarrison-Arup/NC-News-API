@@ -12,7 +12,8 @@ exports.fetchArticles = ({
     .where(query => {
       if (author) query.where({ author });
       if (topic) query.where({ topic });
-    });
+    })
+    .returning('*');
 };
 
 exports.fetchArticleById = ({ article_id }) => {

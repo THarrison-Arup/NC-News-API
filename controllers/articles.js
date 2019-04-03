@@ -22,7 +22,9 @@ exports.updateArticleById = (req, res, next) => {
   });
 };
 
-
 exports.removeArticleById = (req, res, next) => {
-  res.status(204).end();
+  fetchArticles(req.params).then(articles => {
+    console.log(articles,'<-- articles array');
+    res.status(204).send({ articles });
+  });
 };

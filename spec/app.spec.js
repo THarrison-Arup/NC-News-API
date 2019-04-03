@@ -147,6 +147,31 @@ describe.only("/", () => {
       it("DELETE status: 204", () => {
         return request.delete("/api/articles/6").expect(204);
       });
+      it("DELETE status: 204 responds with an array of article objects with an article object removed", () => {
+        return request
+          .get("/api/articles/6")
+          .expect(200)
+          .then(({ body: { article } }) => {
+            console.log(article, "<--article6");
+            expect(article).to.eql({
+              article_id: 6,
+              title: "A",
+              body: "Delicious tin of cat food",
+              votes: 0,
+              topic: "mitch",
+              author: "icellusedkars",
+              created_at: "1998-11-20T00:00:00.000Z"
+            });
+          })
+          .then(() => {
+            return request
+              .delete("/api/articles/6")
+              .expect(204)
+              .then(() => {
+                return request.get("/api/articles/6").expect(404);
+              });
+          });
+      });
     });
   });
 });
