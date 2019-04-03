@@ -27,17 +27,19 @@ const commentsData = (commentsArr, articleArr) => {
 
   commentsArr.forEach(obj => {
 
+    let newObj = {...obj};
+
     let reference = createArticleIdRef(articleArr);
 
-    obj['article_id'] = reference['belongs_to'];
+    newObj['article_id'] = reference[newObj.belongs_to];
 
-    obj['author'] = obj['created_by'];
+    newObj['author'] = obj['created_by'];
 
-    delete obj['belongs_to'];
+    delete newObj['belongs_to'];
 
-    delete obj['created_by'];
+    delete newObj['created_by'];
 
-    newCommentData.push(obj);
+    newCommentData.push(newObj);
   });
 
   return newCommentData
