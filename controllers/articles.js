@@ -21,3 +21,8 @@ exports.updateArticleById = (req, res, next) => {
     res.status(201).send({ article });
   });
 };
+
+
+exports.removeArticleById = (req, res, next) => {
+  res.status(204).end();
+};

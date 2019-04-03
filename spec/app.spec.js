@@ -102,7 +102,7 @@ describe.only("/", () => {
               "body",
               "created_at",
               "votes"
-            )
+            );
             expect(article.article_id).to.equal(3);
           });
       });
@@ -121,28 +121,32 @@ describe.only("/", () => {
               "body",
               "created_at",
               "votes"
-            )
+            );
             expect(article.article_id).to.equal(2);
           });
       });
       it("PATCH status: 201 responds with an article object and takes a patch body", () => {
         return request
-          .patch('/api/articles/4')
-          .send({inc_votes: 1})
+          .patch("/api/articles/4")
+          .send({ inc_votes: 1 })
           .expect(201)
-          .then(({ body: {article}}) => {
+          .then(({ body: { article } }) => {
             expect(article.article_id).to.equal(4);
             expect(article).to.eql({
-              "article_id": 4,
-              "author": "rogersop",
-              "body" : "We all love Mitch and his wonderful, unique typing style. However, the volume of his typing has ALLEGEDLY burst another students eardrums, and they are now suing for damages",
-              "created_at": "2006-11-18T00:00:00.000Z",
-              "title": "Student SUES Mitch!",
-              "topic": "mitch",
-              "votes": 1
-            })
-          })
-      })
+              article_id: 4,
+              author: "rogersop",
+              body:
+                "We all love Mitch and his wonderful, unique typing style. However, the volume of his typing has ALLEGEDLY burst another students eardrums, and they are now suing for damages",
+              created_at: "2006-11-18T00:00:00.000Z",
+              title: "Student SUES Mitch!",
+              topic: "mitch",
+              votes: 1
+            });
+          });
+      });
+      it("DELETE status: 204", () => {
+        return request.delete("/api/articles/6").expect(204);
+      });
     });
   });
 });
