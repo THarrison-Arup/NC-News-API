@@ -76,9 +76,9 @@ describe.only("/", () => {
         .then(({ body: { articles } }) => {
           expect(articles[0]["article_id"]).to.equal(7);
         });
-      });
-      it("GET status: 200 responds with an array of article objects with a sort order", () => {
-        return request
+    });
+    it("GET status: 200 responds with an array of article objects with a sort order", () => {
+      return request
         .get("/api/articles?sort_by=title&&order=asc")
         .expect(200)
         .then(({ body: { articles } }) => {
@@ -92,9 +92,30 @@ describe.only("/", () => {
       });
       it("GET status: 200 responds with an article object", () => {
         return request
-          .get("/api/articles/1")
+          .get("/api/articles/3")
           .expect(200)
           .then(({ body: { article } }) => {
+            console.log(article,'<--article by ID')
+            expect(article).to.contain.keys(
+              "title",
+              "topic",
+              "author",
+              "body",
+              "created_at",
+              "votes"
+            )
+            expect(article.article_id).to.equal(3);
+          });
+      });
+      it("GET status: 201", () => {
+        return request.patch("/api/articles/1").expect(201);
+      });
+      it("GET status: 201 responds with an article object", () => {
+        return request
+          .patch("/api/articles/2")
+          .expect(201)
+          .then(({ body: { article } }) => {
+            // console.log(article,'<-- patch article');
             expect(article).to.contain.keys(
               "title",
               "topic",
@@ -104,9 +125,6 @@ describe.only("/", () => {
               "votes"
             );
           });
-      });
-      it('GET status: 201', () => {
-        return request.patch('/api/articles/1').expect(201)
       });
     });
   });
