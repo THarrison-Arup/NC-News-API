@@ -6,7 +6,7 @@ exports.up = function(knex, Promise) {
     articles.text('body');
     articles.integer('votes').defaultTo(0);
     articles.text('topic');
-    articles.text('author').references('users.username');
+    articles.text('author').references('users.username').onDelete('CASCADE');
     articles.date('created_at').defaultTo(knex.fn.now());
   });
 };

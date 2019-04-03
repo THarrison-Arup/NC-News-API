@@ -193,7 +193,7 @@ describe.only("/", () => {
         it("GET status: 200", () => {
           return request.get("/api/articles/1/comments").expect(200);
         });
-        it.only("GET status: 200 returns an array of comment objects", () => {
+        it("GET status: 200 returns an array of comment objects", () => {
           return request
             .get("/api/articles/1/comments")
             .expect(200)
