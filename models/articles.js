@@ -42,14 +42,19 @@ exports.removeArticle = ({ article_id }) => {
   return knex("articles")
     .select("*")
     .where(article => {
-      if (article_id)
-      article.where({ article_id });
-      
+      if (article_id) article.where({ article_id });
     })
     .then(([article]) => {
-      console.log(article,'<--article to del')
       return knex("articles")
-      .where(article)
-      .del();
+        .where(article)
+        .del();
+    });
+};
+
+exports.fetchCommentsByArticleId = ({ article_id }) => {
+  return knex("comments")
+    .select("*")
+    .where(article => {
+      if (article_id) article.where({ article_id });
     });
 };
