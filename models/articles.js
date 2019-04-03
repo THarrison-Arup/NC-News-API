@@ -51,10 +51,16 @@ exports.removeArticle = ({ article_id }) => {
     });
 };
 
-exports.fetchCommentsByArticleId = ({ article_id }) => {
+exports.fetchCommentsByArticleId = (
+  { article_id },
+  { sort_by = "created_at", order }
+) => {
   return knex("comments")
     .select("*")
+    .orderBy(sort_by)
     .where(article => {
+      console.log(article_id,'<--article_id')
       if (article_id) article.where({ article_id });
-    });
+    })
+    .returning("*");
 };
