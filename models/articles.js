@@ -27,7 +27,6 @@ exports.updateArticle = ({ article_id }) => {
   return knex("articles")
     .select("*")
     .where(params => {
-      console.log({ article_id }, "<-- article id");
       if (article_id) params.where({ article_id });
     });
 };
