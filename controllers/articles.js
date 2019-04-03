@@ -33,3 +33,7 @@ exports.removeArticleById = (req, res, next) => {
     res.status(204).send({ articles });
   });
 };
+
+exports.sendCommentsByArticleId = (req, res, next) => {
+  res.status(200).end();
+};
