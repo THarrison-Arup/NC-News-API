@@ -1,5 +1,14 @@
 exports.handle400 = (err, req, res, next) => {
-  res.status(400).send({ msg: 'Bad Request ID'})
+  // console.log(err,'<--400 err')
+  const codes = ['22P02']
+  if (err === 400|| codes.includes(err.code)) res.status(400).send({ msg: 'Bad Request ID'});
+  else next(err);
+};
+
+exports.handle404 = (err, req, res, next) => {
+  // console.log(err,'<--404 err')
+  if (err === 404) res.status(404).send({msg: 'Endpoint does not exist'});
+  else next();
 };
 
 exports.routeNotFound = (req, res) => {

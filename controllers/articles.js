@@ -14,8 +14,9 @@ exports.sendArticles = (req, res, next) => {
 exports.sendArticleById = (req, res, next) => {
   fetchArticleById(req.params)
     .then(([article]) => {
+      console.log(article,'<-- article object');
       if (!article) return Promise.reject({ status: 404 });
-      res.status(200).send({ article });
+      else res.status(200).send({ article });
     })
     .catch(next);
 };
