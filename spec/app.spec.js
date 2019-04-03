@@ -147,7 +147,7 @@ describe.only("/", () => {
       it("DELETE status: 204", () => {
         return request.delete("/api/articles/6").expect(204);
       });
-      it("DELETE status: 204 responds with an array of article objects with an article object removed", () => {
+      xit("DELETE status: 204 responds with an array of article objects with an article object removed", () => {
         return request
           .get("/api/articles/6")
           .expect(200)
@@ -164,13 +164,19 @@ describe.only("/", () => {
             });
           })
           .then(() => {
-            return request
-              .delete("/api/articles/6")
-              .expect(204)
-              .then(() => {
-                return request.get("/api/articles/6").expect(404);
-              });
+            return request.delete("/api/articles/6").expect(204);
+          })
+          .then(() => {
+            return request.get("/api/articles/6").expect(404);
           });
+      });
+
+      describe('/api/articles/:article_id', () => {
+        it('GET status: 400 responds with error message when request is made with a bad ID', () => {
+          return request
+            .get("/api/articles/a")
+            .expect(400);
+        });
       });
     });
   });

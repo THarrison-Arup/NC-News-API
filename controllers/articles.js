@@ -1,7 +1,8 @@
 const {
   fetchArticles,
   fetchArticleById,
-  updateArticle
+  updateArticle,
+  removeArticle
 } = require("../models/articles");
 
 exports.sendArticles = (req, res, next) => {
@@ -11,9 +12,12 @@ exports.sendArticles = (req, res, next) => {
 };
 
 exports.sendArticleById = (req, res, next) => {
-  fetchArticleById(req.params).then(([article]) => {
-    res.status(200).send({ article });
-  });
+  fetchArticleById(req.params)
+    .then(([article]) => {
+      if (!article) return Promise.reject({ status: 404 });
+      res.status(200).send({ article });
+    })
+    .catch(next);
 };
 
 exports.updateArticleById = (req, res, next) => {
@@ -23,8 +27,8 @@ exports.updateArticleById = (req, res, next) => {
 };
 
 exports.removeArticleById = (req, res, next) => {
-  fetchArticles(req.params).then(articles => {
-    console.log(articles,'<-- articles array');
+  removeArticle(req.params).then(articles => {
+    // console.log(articles,'<--articles array');
     res.status(204).send({ articles });
   });
 };

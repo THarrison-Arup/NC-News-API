@@ -1,3 +1,7 @@
+exports.handle400 = (err, req, res, next) => {
+  res.status(400).send({ msg: 'Bad Request ID'})
+};
+
 exports.routeNotFound = (req, res) => {
   res.status(404).send({ msg: 'Route Not Found' });
 };

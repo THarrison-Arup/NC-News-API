@@ -13,7 +13,7 @@ exports.fetchArticles = ({
       if (author) query.where({ author });
       if (topic) query.where({ topic });
     })
-    .returning('*');
+    .returning("*");
 };
 
 exports.fetchArticleById = ({ article_id }) => {
@@ -34,6 +34,22 @@ exports.updateArticle = ({ article_id }, { inc_votes = 0 }) => {
       return knex("articles")
         .where({ article_id })
         .update("votes", article.votes + inc_votes)
-        .returning('*');
+        .returning("*");
+    });
+};
+
+exports.removeArticle = ({ article_id }) => {
+  return knex("articles")
+    .select("*")
+    .where(article => {
+      if (article_id)
+      article.where({ article_id });
+      
+    })
+    .then(([article]) => {
+      console.log(article,'<--article to del')
+      return knex("articles")
+      .where(article)
+      .del();
     });
 };
