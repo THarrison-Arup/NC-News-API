@@ -17,9 +17,7 @@ exports.sendArticleById = (req, res, next) => {
 };
 
 exports.updateArticleById = (req, res, next) => {
-  updateArticle(req.params).then(([article]) => {
-    console.log(req.params, "<-- params");
-    console.log(req.body, "<-- body");
+  updateArticle(req.params, req.body).then(([article]) => {
     res.status(201).send({ article });
   });
 };

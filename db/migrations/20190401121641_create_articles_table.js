@@ -4,7 +4,7 @@ exports.up = function(knex, Promise) {
     articles.increments('article_id').primary();
     articles.text('title');
     articles.text('body');
-    articles.integer('votes');
+    articles.integer('votes').defaultTo(0);
     articles.text('topic');
     articles.text('author').references('users.username');
     articles.date('created_at').defaultTo(knex.fn.now());

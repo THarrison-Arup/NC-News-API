@@ -131,7 +131,6 @@ describe.only("/", () => {
           .send({inc_votes: 1})
           .expect(201)
           .then(({ body: {article}}) => {
-            console.log(article)
             expect(article.article_id).to.equal(4);
             expect(article).to.eql({
               "article_id": 4,
