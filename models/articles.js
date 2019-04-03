@@ -10,12 +10,12 @@ exports.fetchArticles = ({ author, topic, sort_by = 'created_at', order = 'desc'
   });
 };
 
-exports.fetchArticleById = (article) => {
+exports.fetchArticleById = () => {
   return knex('articles')
     .select( '*' );
 };
 
-exports.updateArticle = (article) => {
+exports.updateArticle = () => {
   return knex('articles')
     .select( '*' );
 };
