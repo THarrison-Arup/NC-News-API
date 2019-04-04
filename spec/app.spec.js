@@ -356,6 +356,14 @@ describe.only("/", () => {
       it("GET status: 200", () => {
         return request.get("/api/users/1").expect(200);
       });
+      it("GET status: 200 responds with a user object", () => {
+        return request
+          .get("/api/users/1")
+          .expect(200)
+          .then(({ body: { user } }) => {
+            expect(user).to.contain.keys("username", "name", "avatar_url");
+          });
+      });
     });
   });
 });

@@ -5,3 +5,11 @@ exports.fetchUsers = () => {
     .select("*")
     .returning("*");
 };
+
+exports.fetchUserById = ({ user_id }) => {
+  return knex("users")
+    .select("*")
+    .where(user => {
+      if (user_id) user.where({ user_id });
+    });
+};

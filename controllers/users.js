@@ -1,4 +1,4 @@
-const { fetchUsers } = require("../models/users");
+const { fetchUsers, fetchUserById } = require("../models/users");
 
 exports.sendUsers = (req, res, next) => {
   fetchUsers(req.query).then(users => {
@@ -7,5 +7,8 @@ exports.sendUsers = (req, res, next) => {
 };
 
 exports.sendUserById = (req, res, next) => {
-  res.status(200).end();
+  fetchUserById(req.params).then(([user]) => {
+    if (!user) return Promise.reject({ status: 404 });
+    res.status(200).send({ user });
+  });
 };

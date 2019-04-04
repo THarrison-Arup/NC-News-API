@@ -29,7 +29,6 @@ exports.updateComment = ({ comment_id }, { inc_votes = 0 }) => {
 };
 
 exports.removeComment = ({ comment_id }) => {
-  console.log(comment_id, "<--comment id");
   return knex("comments")
     .select("*")
     .where(comment => {
