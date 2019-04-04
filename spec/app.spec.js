@@ -339,9 +339,9 @@ describe.only("/", () => {
     });
   });
 
-  describe('/api/users/:username', () => {
+  describe('/api/users/', () => {
     it('GET status: 200', () => {
-      return request.get("/api/users/icellusedkars").expect(200);
+      return request.get("/api/users").expect(200);
     });
   });
 });
