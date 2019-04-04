@@ -1,4 +1,9 @@
-const { fetchComments, updateComment } = require("../models/comments");
+const {
+  fetchComments,
+  updateComment,
+  removeComment,
+  fetchCommentById
+} = require("../models/comments");
 
 exports.sendComments = (req, res, next) => {
   fetchComments(req.query).then(comments => {
@@ -7,7 +12,12 @@ exports.sendComments = (req, res, next) => {
 };
 
 exports.sendCommentById = (req, res, next) => {
-  res.status(200).end();
+  fetchCommentById(req.params)
+    .then(([comment]) => {
+      if (!comment) return Promise.reject({ status: 404 });
+      res.status(200).send({ comment });
+    })
+    .catch(next);
 };
 
 exports.updateCommentById = (req, res, next) => {
@@ -17,5 +27,9 @@ exports.updateCommentById = (req, res, next) => {
 };
 
 exports.removeCommentById = (req, res, next) => {
-  res.status(204).end();
+  removeComment(req.params)
+    .then(comments => {
+      res.status(204).send({ comments });
+    })
+    .catch(next);
 };

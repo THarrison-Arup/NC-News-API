@@ -66,6 +66,6 @@ exports.fetchCommentsByArticleId = (
 
 exports.addComment = ({ article_id }, { author, body }) => {
   return knex("comments")
-    .insert({article_id, author, body})
+    .insert({ article_id, author, body })
     .returning("*");
 };

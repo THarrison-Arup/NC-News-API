@@ -304,7 +304,8 @@ describe.only("/", () => {
           expect(comment).to.eql({
             comment_id: 1,
             author: "butter_bridge",
-            body: "Oh, I've got compassion running out of my nose, pal! I'm the Sultan of Sentiment!",
+            body:
+              "Oh, I've got compassion running out of my nose, pal! I'm the Sultan of Sentiment!",
             votes: 15,
             created_at: "2017-11-22T00:00:00.000Z",
             article_id: 9
@@ -314,6 +315,27 @@ describe.only("/", () => {
     });
     it("DELETE status: 204", () => {
       return request.delete("/api/comments/15").expect(204);
+    });
+    it("DELETE status: 204 responds with an error status and message", () => {
+      return request
+        .get("/api/comments/11")
+        .expect(200)
+        .then(({ body: { comment } }) => {
+          expect(comment).to.eql({
+            comment_id: 11,
+            author: "icellusedkars",
+            article_id: 1,
+            votes: 0,
+            created_at: "2007-11-25T00:00:00.000Z",
+            body: "Ambidextrous marsupial"
+          });
+        })
+        .then(() => {
+          return request.delete("/api/comments/11").expect(204);
+        })
+        .then(() => {
+          return request.get("/api/comments/11").expect(404);
+        });
     });
   });
 });
