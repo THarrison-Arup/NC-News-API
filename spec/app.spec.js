@@ -209,20 +209,38 @@ describe.only("/", () => {
               );
             });
         });
-        it.only("GET status: 200 return a sorted array of comment objects", () => {
+        it("GET status: 200 return a sorted array of comment objects", () => {
           return request
-            .get("/api/articles/2/comments?sort_by=author")
+            .get("/api/articles/1/comments?sort_by=comment_id")
             .expect(200)
             .then(({ body: { comments } }) => {
-              expect(comments).to.be.an('array');
-              expect(comments[0]).to.contain.keys(
-                "comment_id",
-                "body",
-                "article_id",
-                "author",
-                "votes",
-                "created_at"
-              )
+              console.log(comments);
+              expect(comments).to.be.an("array");
+              expect(comments[0]).to.eql({
+                comment_id: 18,
+                author: "butter_bridge",
+                article_id: 1,
+                votes: 16,
+                created_at: "2000-11-26T00:00:00.000Z",
+                body: "This morning, I showered for nine minutes."
+              });
+            });
+        });
+        it("GET status: 200 return a sorted array of comment object when given a sort_by criteria and an order", () => {
+          return request
+            .get("/api/articles/1/comments?sort_by=comment_id&&order=asc")
+            .expect(200)
+            .then(({ body: { comments } }) => {
+              expect(comments).to.be.an("array");
+              expect(comments[0]).to.eql({
+                comment_id: 2,
+                author: "butter_bridge",
+                article_id: 1,
+                votes: 14,
+                created_at: "2016-11-22T00:00:00.000Z",
+                body:
+                  "The beautiful thing about treasure is that it exists. Got to find out what kind of sheets these are; not cotton, not rayon, silky."
+              });
             });
         });
       });

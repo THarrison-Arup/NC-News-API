@@ -36,6 +36,5 @@ exports.removeArticleById = (req, res, next) => {
 exports.sendCommentsByArticleId = (req, res, next) => {
   fetchCommentsByArticleId(req.params, req.query).then(comments => {
     res.status(200).send({ comments });
-    console.log(comments,'<-- comments')
   });
 };

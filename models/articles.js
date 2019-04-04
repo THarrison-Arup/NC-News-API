@@ -53,13 +53,12 @@ exports.removeArticle = ({ article_id }) => {
 
 exports.fetchCommentsByArticleId = (
   { article_id },
-  { sort_by = "created_at", order }
+  { sort_by = "created_at", order = 'desc' }
 ) => {
   return knex("comments")
     .select("*")
-    .orderBy(sort_by)
+    .orderBy(sort_by, order)
     .where(article => {
-      console.log(article_id,'<--article_id')
       if (article_id) article.where({ article_id });
     })
     .returning("*");
