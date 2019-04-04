@@ -338,4 +338,10 @@ describe.only("/", () => {
         });
     });
   });
+
+  describe('/api/users/:username', () => {
+    it('GET status: 200', () => {
+      return request.get("/api/users/icellusedkars").expect(200);
+    });
+  });
 });
