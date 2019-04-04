@@ -270,5 +270,21 @@ describe.only("/", () => {
     it('GET stauts: 200', () => {
       return request.get("/api/comments").expect(200);
     });
+    it("GET status: 200 responds with an array of comment objects", () => {
+      return request
+        .get("/api/comments")
+        .expect(200)
+        .then(({body: {comments}}) => {
+          expect(comments).to.be.an('array');
+          expect(comments[0]).to.contain.keys(
+            "comment_id",
+                "body",
+                "article_id",
+                "author",
+                "votes",
+                "created_at"
+          )
+        })
+    })
   });
 });

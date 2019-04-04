@@ -1,5 +1,7 @@
-const {sendComments} = require("../models/comments");
+const { fetchComments } = require("../models/comments");
 
 exports.sendComments = (req, res, next) => {
-  res.status(200).end();
+  fetchComments(req.query).then(comments => {
+    res.status(200).send({ comments });
+  });
 };
