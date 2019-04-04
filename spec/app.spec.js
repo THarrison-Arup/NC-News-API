@@ -258,7 +258,7 @@ describe.only("/", () => {
                 "votes",
                 "created_at",
                 "article_id"
-              )
+              );
               expect(comment.author).to.equal("butter_bridge");
             });
         });
@@ -266,25 +266,31 @@ describe.only("/", () => {
     });
   });
 
-  describe('/api/comments', () => {
-    it('GET stauts: 200', () => {
+  describe("/api/comments", () => {
+    it("GET status: 200", () => {
       return request.get("/api/comments").expect(200);
     });
     it("GET status: 200 responds with an array of comment objects", () => {
       return request
         .get("/api/comments")
         .expect(200)
-        .then(({body: {comments}}) => {
-          expect(comments).to.be.an('array');
+        .then(({ body: { comments } }) => {
+          expect(comments).to.be.an("array");
           expect(comments[0]).to.contain.keys(
             "comment_id",
-                "body",
-                "article_id",
-                "author",
-                "votes",
-                "created_at"
-          )
-        })
-    })
+            "body",
+            "article_id",
+            "author",
+            "votes",
+            "created_at"
+          );
+        });
+    });
+  });
+
+  describe('/api/comments/:comment_id', () => {
+    it('GET status: 200', () => {
+      return request.get("/api/comments/1").expect(200);
+    });
   });
 });

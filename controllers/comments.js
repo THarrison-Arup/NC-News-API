@@ -5,3 +5,7 @@ exports.sendComments = (req, res, next) => {
     res.status(200).send({ comments });
   });
 };
+
+exports.sendCommentById = (req, res, next) => {
+  res.status(200).end();
+};
