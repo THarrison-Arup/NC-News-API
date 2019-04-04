@@ -65,9 +65,6 @@ exports.fetchCommentsByArticleId = (
 };
 
 exports.addComment = ({ article_id }, { author, body }) => {
-  // console.log(author);
-  // console.log(body);
-  // console.log(article_id);
   return knex("comments")
     .insert({article_id, author, body})
     .returning("*");

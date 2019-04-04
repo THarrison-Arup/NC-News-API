@@ -1,4 +1,4 @@
-const { fetchComments } = require("../models/comments");
+const { fetchComments, updateComment } = require("../models/comments");
 
 exports.sendComments = (req, res, next) => {
   fetchComments(req.query).then(comments => {
@@ -7,9 +7,11 @@ exports.sendComments = (req, res, next) => {
 };
 
 exports.sendCommentById = (req, res, next) => {
-    res.status(200).end();
+  res.status(200).end();
 };
 
 exports.updateCommentById = (req, res, next) => {
-  res.status(201).end();
+  updateComment(req.params, req.body).then(([comment]) => {
+    res.status(201).send({ comment });
+  });
 };

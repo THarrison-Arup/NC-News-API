@@ -292,8 +292,25 @@ describe.only("/", () => {
     it("GET status: 200", () => {
       return request.get("/api/comments/1").expect(200);
     });
-    it("POST status: 201", () => {
+    it("PATCH status: 201", () => {
       return request.patch("/api/comments/1").expect(201);
+    });
+    it("PATCH status: 201 responds with the comment object of the updated comment", () => {
+      return request
+        .patch("/api/comments/1")
+        .send({ inc_votes: -1 })
+        .expect(201)
+        .then(({ body: { comment } }) => {
+          expect(comment).to.eql({
+            comment_id: 1,
+            author: "butter_bridge",
+            body: "Oh, I've got compassion running out of my nose, pal! I'm the Sultan of Sentiment!",
+            votes: 15,
+            created_at: "2017-11-22T00:00:00.000Z",
+            article_id: 9
+          });
+          expect(comment.votes).to.equal(15);
+        });
     });
   });
 });
