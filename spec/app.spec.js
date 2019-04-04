@@ -351,5 +351,11 @@ describe.only("/", () => {
           expect(users).to.be.an("array");
         });
     });
+
+    describe("/api/users/:username", () => {
+      it("GET status: 200", () => {
+        return request.get("/api/users/1").expect(200);
+      });
+    });
   });
 });
