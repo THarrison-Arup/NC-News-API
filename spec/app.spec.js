@@ -312,5 +312,8 @@ describe.only("/", () => {
           expect(comment.votes).to.equal(15);
         });
     });
+    it("DELETE status: 204", () => {
+      return request.delete("/api/comments/15").expect(204);
+    });
   });
 });

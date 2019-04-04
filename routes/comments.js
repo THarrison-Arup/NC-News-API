@@ -1,7 +1,7 @@
 const commentsRouter = require("express").Router();
 const { methodNotAllowed } = require("../errors");
 
-const { sendComments, sendCommentById, updateCommentById } = require("../controllers/comments");
+const { sendComments, sendCommentById, updateCommentById, removeCommentById } = require("../controllers/comments");
 
 commentsRouter
   .route("/")
@@ -12,6 +12,7 @@ commentsRouter
   .route("/:comment_id")
   .get(sendCommentById)
   .patch(updateCommentById)
+  .delete(removeCommentById)
   .all(methodNotAllowed);
 
 module.exports = commentsRouter;

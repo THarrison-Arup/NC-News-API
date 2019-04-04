@@ -15,3 +15,7 @@ exports.updateCommentById = (req, res, next) => {
     res.status(201).send({ comment });
   });
 };
+
+exports.removeCommentById = (req, res, next) => {
+  res.status(204).end();
+};
