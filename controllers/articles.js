@@ -4,7 +4,7 @@ const {
   updateArticle,
   removeArticle,
   fetchCommentsByArticleId,
-  updateComment
+  addComment
 } = require("../models/articles");
 
 exports.sendArticles = (req, res, next) => {
@@ -31,7 +31,8 @@ exports.updateArticleById = (req, res, next) => {
 exports.removeArticleById = (req, res, next) => {
   removeArticle(req.params).then(articles => {
     res.status(204).send({ articles });
-  });
+  })
+  .catch(next);
 };
 
 exports.sendCommentsByArticleId = (req, res, next) => {
@@ -41,5 +42,7 @@ exports.sendCommentsByArticleId = (req, res, next) => {
 };
 
 exports.updateCommentByArticleId = (req, res, next) => {
-    res.status(201).end();
+  addComment(req.params, req.body).then(([comment]) => {
+    res.status(201).send({ comment });
+  });
 };

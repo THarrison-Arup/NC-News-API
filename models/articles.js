@@ -53,7 +53,7 @@ exports.removeArticle = ({ article_id }) => {
 
 exports.fetchCommentsByArticleId = (
   { article_id },
-  { sort_by = "created_at", order = 'desc' }
+  { sort_by = "created_at", order = "desc" }
 ) => {
   return knex("comments")
     .select("*")
@@ -64,4 +64,11 @@ exports.fetchCommentsByArticleId = (
     .returning("*");
 };
 
-exports.updateComment = () => {};
+exports.addComment = ({ article_id }, { author, body }) => {
+  // console.log(author);
+  // console.log(body);
+  // console.log(article_id);
+  return knex("comments")
+    .insert({article_id, author, body})
+    .returning("*");
+};

@@ -176,7 +176,7 @@ describe.only("/", () => {
             .get("/api/articles/a")
             .expect(400)
             .then(article => {
-              console.log(article.body.msg);
+              // console.log(article.body.msg);
             });
         });
         it("GET status: 404 responds with error message when bad request is made", () => {
@@ -184,7 +184,7 @@ describe.only("/", () => {
             .get("/api/particles/1")
             .expect(404)
             .then(article => {
-              console.log(article.body.msg);
+              // console.log(article.body.msg);
             });
         });
       });
@@ -242,8 +242,25 @@ describe.only("/", () => {
               });
             });
         });
-        it.only("POST status: 201", () => {
+        it("POST status: 201", () => {
           return request.post("/api/articles/1/comments").expect(201);
+        });
+        it("POST status: 201 responds with the posted comment object", () => {
+          return request
+            .post("/api/articles/1/comments")
+            .send({ author: "butter_bridge", body: "test comment" })
+            .expect(201)
+            .then(({ body: { comment } }) => {
+              expect(comment).to.contain.keys(
+                "comment_id",
+                "author",
+                "body",
+                "votes",
+                "created_at",
+                "article_id"
+              )
+              expect(comment.author).to.equal("butter_bridge");
+            });
         });
       });
     });
