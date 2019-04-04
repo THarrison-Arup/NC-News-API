@@ -6,9 +6,15 @@ const articlesRouter = require("./articles");
 const commentsRouter = require("./comments");
 const usersRouter = require("./users");
 
+var endpointsJSON = require("../endpoints.json")
+
+const sendEndpoints = (req, res, next) => {
+  res.status(200).send({ msg: endpointsJSON });
+};
+
 apiRouter
   .route("/")
-  .get((req, res) => res.send({ ok: true }))
+  .get(sendEndpoints)
   .all(methodNotAllowed);
 
 apiRouter.use("/topics", topicsRouter);

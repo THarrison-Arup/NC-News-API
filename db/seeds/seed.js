@@ -1,4 +1,4 @@
-const { articleData, commentData, topicData, userData } = require("../data");
+const { articleData, commentData, topicData, userData } = require("../data/index");
 const { timestampToDate, commentsData } = require("../../utils/utils");
 
 exports.seed = (knex, Promise) => {

@@ -14,11 +14,17 @@ describe.only("/", () => {
 
   describe("/api", () => {
     it("GET status:200", () => {
+      return request.get("/api").expect(200);
+    });
+    it("GET status:200 responds with a JSON describing all the available endpoints on the API", () => {
       return request
         .get("/api")
         .expect(200)
-        .then(({ body }) => {
-          expect(body.ok).to.equal(true);
+        .then(({ body: { msg } }) => {
+          expect(msg["GET /api"]).to.eql({
+            description:
+              "serves up a json representation of al the available endpoints of the api"
+          });
         });
     });
   });
