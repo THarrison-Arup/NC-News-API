@@ -265,4 +265,10 @@ describe.only("/", () => {
       });
     });
   });
+
+  describe('/api/comments', () => {
+    it('GET stauts: 200', () => {
+      return request.get("/api/comments").expect(200);
+    });
+  });
 });
