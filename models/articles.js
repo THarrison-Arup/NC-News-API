@@ -63,3 +63,5 @@ exports.fetchCommentsByArticleId = (
     })
     .returning("*");
 };
+
+exports.updateComment = () => {};

@@ -3,7 +3,8 @@ const {
   fetchArticleById,
   updateArticle,
   removeArticle,
-  fetchCommentsByArticleId
+  fetchCommentsByArticleId,
+  updateComment
 } = require("../models/articles");
 
 exports.sendArticles = (req, res, next) => {
@@ -37,4 +38,8 @@ exports.sendCommentsByArticleId = (req, res, next) => {
   fetchCommentsByArticleId(req.params, req.query).then(comments => {
     res.status(200).send({ comments });
   });
+};
+
+exports.updateCommentByArticleId = (req, res, next) => {
+    res.status(201).end();
 };

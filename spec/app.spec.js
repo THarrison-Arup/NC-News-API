@@ -214,7 +214,6 @@ describe.only("/", () => {
             .get("/api/articles/1/comments?sort_by=comment_id")
             .expect(200)
             .then(({ body: { comments } }) => {
-              console.log(comments);
               expect(comments).to.be.an("array");
               expect(comments[0]).to.eql({
                 comment_id: 18,
@@ -242,6 +241,9 @@ describe.only("/", () => {
                   "The beautiful thing about treasure is that it exists. Got to find out what kind of sheets these are; not cotton, not rayon, silky."
               });
             });
+        });
+        it.only("POST status: 201", () => {
+          return request.post("/api/articles/1/comments").expect(201);
         });
       });
     });
