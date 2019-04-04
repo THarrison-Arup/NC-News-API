@@ -339,9 +339,17 @@ describe.only("/", () => {
     });
   });
 
-  describe('/api/users/', () => {
-    it('GET status: 200', () => {
+  describe("/api/users", () => {
+    it("GET status: 200", () => {
       return request.get("/api/users").expect(200);
+    });
+    it("GET status: 200 responds with an array of user objects", () => {
+      return request
+        .get("/api/users")
+        .expect(200)
+        .then(({ body: { users } }) => {
+          expect(users).to.be.an("array");
+        });
     });
   });
 });

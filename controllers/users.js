@@ -1,5 +1,7 @@
-const {} = require("../models/users");
+const { fetchUsers } = require("../models/users");
 
 exports.sendUsers = (req, res, next) => {
-  res.status(200).end();
+  fetchUsers(req.query).then(users => {
+    res.status(200).send({ users });
+  });
 };
