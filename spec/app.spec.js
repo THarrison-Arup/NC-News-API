@@ -288,9 +288,12 @@ describe.only("/", () => {
     });
   });
 
-  describe('/api/comments/:comment_id', () => {
-    it('GET status: 200', () => {
+  describe("/api/comments/:comment_id", () => {
+    it("GET status: 200", () => {
       return request.get("/api/comments/1").expect(200);
+    });
+    it("POST status: 201", () => {
+      return request.patch("/api/comments/1").expect(201);
     });
   });
 });

@@ -7,5 +7,9 @@ exports.sendComments = (req, res, next) => {
 };
 
 exports.sendCommentById = (req, res, next) => {
-  res.status(200).end();
+    res.status(200).end();
+};
+
+exports.updateCommentById = (req, res, next) => {
+  res.status(201).end();
 };
