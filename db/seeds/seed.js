@@ -1,5 +1,5 @@
-const { articleData, commentData, topicData, userData } = require("../data/index");
-const { timestampToDate, commentsData } = require("../../utils/utils");
+const { articleData, commentData, topicData, userData } = require("../data/index.js");
+const { timestampToDate, commentsData } = require("../../utils/utils.js");
 
 exports.seed = (knex, Promise) => {
   return knex.migrate
