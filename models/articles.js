@@ -3,17 +3,22 @@ const knex = require("../db/connection");
 exports.fetchArticles = ({
   author,
   topic,
-  sort_by = "created_at",
+  sort_by = "comments.created_at",
   order = "desc"
 }) => {
-  return knex("articles")
-    .select("*")
-    .orderBy(sort_by, order)
-    .where(query => {
-      if (author) query.where({ author });
-      if (topic) query.where({ topic });
-    })
-    .returning("*");
+  return (
+    knex("comments")
+      .select("comments.article_id", "articles.article_id")
+      .count('articles.title AS comment_count')
+      .innerJoin("articles", "articles.article_id", "=", "comments.article_id")
+      .groupBy("articles.article_id", "comments.article_id","comments.created_at")
+      .orderBy(sort_by, order)
+      .where(query => {
+        if (author) query.where({ author });
+        if (topic) query.where({ topic });
+      })
+      
+  );
 };
 
 exports.fetchArticleById = ({ article_id }) => {

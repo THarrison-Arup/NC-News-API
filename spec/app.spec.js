@@ -30,10 +30,10 @@ describe.only("/", () => {
   });
 
   describe("/api/topics", () => {
-    it("GET status:200", () => {
+    it("GET status: 200", () => {
       return request.get("/api/topics").expect(200);
     });
-    it("GET status:200 responds with an array of topics", () => {
+    it("GET status: 200 responds with an array of topics", () => {
       return request
         .get("/api/topics")
         .expect(200)
@@ -55,7 +55,7 @@ describe.only("/", () => {
           expect(articles).to.be.an("array");
         });
     });
-    it("GET status: 200 responds with an array of article objects with an author query", () => {
+    xit("GET status: 200 responds with an array of article objects with an author query", () => {
       return request
         .get("/api/articles?author=butter_bridge")
         .expect(200)
@@ -65,7 +65,7 @@ describe.only("/", () => {
           });
         });
     });
-    it("GET status: 200 responds with an array of article objects with a topic query", () => {
+    xit("GET status: 200 responds with an array of article objects with a topic query", () => {
       return request
         .get("/api/articles?topic=mitch")
         .expect(200)
@@ -75,7 +75,7 @@ describe.only("/", () => {
           });
         });
     });
-    it("GET status: 200 responds with an array of article object with a sort_by query", () => {
+    xit("GET status: 200 responds with an array of article object with a sort_by query", () => {
       return request
         .get("/api/articles?sort_by=title")
         .expect(200)
@@ -91,34 +91,55 @@ describe.only("/", () => {
           expect(articles[0]["article_id"]).to.equal(6);
         });
     });
+    it("GET status: 200 resoponds with an array of article objects with a comment_count property", () => {
+      return request
+        .get("/api/articles")
+        .expect(200)
+        .then(({ body: { articles } }) => {
+          articles.forEach(article => {
+            expect(article).to.contain.keys("comment_count");
+          });
+        });
+    });
+
+    it("ERRORS GET status: 200 responds with a message when given a an invalid sort_by query", () => {
+      return request
+        .get("/api/articles?sort_by=test")
+        .expect(200)
+        .then(({ body: { msg } }) => {
+          expect(msg).to.equal("Sort query is invalid");
+        });
+    });
 
     describe("/api/articles/:article_id", () => {
       it("GET status: 200", () => {
         return request.get("/api/articles/1").expect(200);
       });
-      it("GET status: 200 responds with an article object", () => {
+      xit("GET status: 200 responds with an article object", () => {
         return request
           .get("/api/articles/3")
           .expect(200)
           .then(({ body: { article } }) => {
             expect(article).to.contain.keys(
+              "article_id",
               "title",
               "topic",
               "author",
               "body",
               "created_at",
+              "comment_count",
               "votes"
             );
             expect(article.article_id).to.equal(3);
           });
       });
-      it("PATCH status: 201", () => {
-        return request.patch("/api/articles/1").expect(201);
+      it("PATCH status: 200", () => {
+        return request.patch("/api/articles/1").expect(200);
       });
-      it("PATCH status: 201 responds with an article object", () => {
+      it("PATCH status: 200 responds with an article object", () => {
         return request
           .patch("/api/articles/2")
-          .expect(201)
+          .expect(200)
           .then(({ body: { article } }) => {
             expect(article).to.contain.keys(
               "title",
@@ -131,11 +152,11 @@ describe.only("/", () => {
             expect(article.article_id).to.equal(2);
           });
       });
-      it("PATCH status: 201 responds with an article object and takes a patch body", () => {
+      it("PATCH status: 200 responds with an article object and takes a patch body", () => {
         return request
           .patch("/api/articles/4")
           .send({ inc_votes: 1 })
-          .expect(201)
+          .expect(200)
           .then(({ body: { article } }) => {
             expect(article.article_id).to.equal(4);
             expect(article).to.eql({
@@ -177,20 +198,27 @@ describe.only("/", () => {
       });
 
       describe("/api/articles/:article_id", () => {
-        it("GET status: 400 responds with error message when request is made with a bad ID", () => {
+        it("ERRORS GET status: 400 responds with error message when request is made with a bad ID", () => {
           return request
             .get("/api/articles/a")
             .expect(400)
-            .then(article => {
-              // console.log(article.body.msg);
+            .then(({body: {msg}}) => {
             });
         });
-        it("GET status: 404 responds with error message when bad request is made", () => {
+        it("ERRORS GET status: 404 responds with error message when bad request is made", () => {
           return request
             .get("/api/particles/1")
             .expect(404)
-            .then(article => {
-              // console.log(article.body.msg);
+            .then(({body: {msg}}) => {
+            });
+        });
+        it("ERRORS GET status: 404 responds with an error message when given an invalid inc_votes", () => {
+          return request
+            .patch("/api/articles/2")
+            .send({ inc_votes: "a" })
+            .expect(200)
+            .then(({body: {msg}}) => {
+              console.log(msg,'<-- error msg');
             });
         });
       });
@@ -292,56 +320,56 @@ describe.only("/", () => {
           );
         });
     });
-  });
 
-  describe("/api/comments/:comment_id", () => {
-    it("GET status: 200", () => {
-      return request.get("/api/comments/1").expect(200);
-    });
-    it("PATCH status: 201", () => {
-      return request.patch("/api/comments/1").expect(201);
-    });
-    it("PATCH status: 201 responds with the comment object of the updated comment", () => {
-      return request
-        .patch("/api/comments/1")
-        .send({ inc_votes: -1 })
-        .expect(201)
-        .then(({ body: { comment } }) => {
-          expect(comment).to.eql({
-            comment_id: 1,
-            author: "butter_bridge",
-            body:
-              "Oh, I've got compassion running out of my nose, pal! I'm the Sultan of Sentiment!",
-            votes: 15,
-            created_at: "2017-11-22T00:00:00.000Z",
-            article_id: 9
+    describe("/api/comments/:comment_id", () => {
+      it("GET status: 200", () => {
+        return request.get("/api/comments/1").expect(200);
+      });
+      it("PATCH status: 201", () => {
+        return request.patch("/api/comments/1").expect(201);
+      });
+      it("PATCH status: 201 responds with the comment object of the updated comment", () => {
+        return request
+          .patch("/api/comments/1")
+          .send({ inc_votes: -1 })
+          .expect(201)
+          .then(({ body: { comment } }) => {
+            expect(comment).to.eql({
+              comment_id: 1,
+              author: "butter_bridge",
+              body:
+                "Oh, I've got compassion running out of my nose, pal! I'm the Sultan of Sentiment!",
+              votes: 15,
+              created_at: "2017-11-22T00:00:00.000Z",
+              article_id: 9
+            });
+            expect(comment.votes).to.equal(15);
           });
-          expect(comment.votes).to.equal(15);
-        });
-    });
-    it("DELETE status: 204", () => {
-      return request.delete("/api/comments/15").expect(204);
-    });
-    it("DELETE status: 204 responds with an error status and message", () => {
-      return request
-        .get("/api/comments/11")
-        .expect(200)
-        .then(({ body: { comment } }) => {
-          expect(comment).to.eql({
-            comment_id: 11,
-            author: "icellusedkars",
-            article_id: 1,
-            votes: 0,
-            created_at: "2007-11-25T00:00:00.000Z",
-            body: "Ambidextrous marsupial"
+      });
+      it("DELETE status: 204", () => {
+        return request.delete("/api/comments/15").expect(204);
+      });
+      it("DELETE status: 204 responds with an error status and message", () => {
+        return request
+          .get("/api/comments/11")
+          .expect(200)
+          .then(({ body: { comment } }) => {
+            expect(comment).to.eql({
+              comment_id: 11,
+              author: "icellusedkars",
+              article_id: 1,
+              votes: 0,
+              created_at: "2007-11-25T00:00:00.000Z",
+              body: "Ambidextrous marsupial"
+            });
+          })
+          .then(() => {
+            return request.delete("/api/comments/11").expect(204);
+          })
+          .then(() => {
+            return request.get("/api/comments/11").expect(404);
           });
-        })
-        .then(() => {
-          return request.delete("/api/comments/11").expect(204);
-        })
-        .then(() => {
-          return request.get("/api/comments/11").expect(404);
-        });
+      });
     });
   });
 
