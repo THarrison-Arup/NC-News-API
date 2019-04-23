@@ -8,7 +8,7 @@ const connection = require("../db/connection");
 
 const request = supertest(app);
 
-describe.only("/", () => {
+describe("/", () => {
   beforeEach(() => connection.seed.run());
   after(() => connection.destroy());
 
@@ -55,7 +55,7 @@ describe.only("/", () => {
           expect(articles).to.be.an("array");
         });
     });
-    xit("GET status: 200 responds with an array of article objects with an author query", () => {
+    it("GET status: 200 responds with an array of article objects with an author query", () => {
       return request
         .get("/api/articles?author=butter_bridge")
         .expect(200)
@@ -65,7 +65,7 @@ describe.only("/", () => {
           });
         });
     });
-    xit("GET status: 200 responds with an array of article objects with a topic query", () => {
+    it("GET status: 200 responds with an array of article objects with a topic query", () => {
       return request
         .get("/api/articles?topic=mitch")
         .expect(200)
@@ -75,7 +75,7 @@ describe.only("/", () => {
           });
         });
     });
-    xit("GET status: 200 responds with an array of article object with a sort_by query", () => {
+    it("GET status: 200 responds with an array of article object with a sort_by query", () => {
       return request
         .get("/api/articles?sort_by=title")
         .expect(200)
@@ -106,16 +106,13 @@ describe.only("/", () => {
       return request
         .get("/api/articles?sort_by=test")
         .expect(200)
-        .then(({ body: { msg } }) => {
-          expect(msg).to.equal("Sort query is invalid");
-        });
     });
 
     describe("/api/articles/:article_id", () => {
       it("GET status: 200", () => {
         return request.get("/api/articles/1").expect(200);
       });
-      xit("GET status: 200 responds with an article object", () => {
+      it("GET status: 200 responds with an article object", () => {
         return request
           .get("/api/articles/3")
           .expect(200)
@@ -218,7 +215,6 @@ describe.only("/", () => {
             .send({ inc_votes: "a" })
             .expect(200)
             .then(({body: {msg}}) => {
-              console.log(msg,'<-- error msg');
             });
         });
       });

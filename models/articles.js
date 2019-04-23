@@ -3,19 +3,22 @@ const knex = require("../db/connection");
 exports.fetchArticles = ({
   author,
   topic,
-  sort_by = "comments.created_at",
+  sort_by = "articles.created_at",
   order = "desc"
 }) => {
+  const validSortQueries = ['author', 'title', 'article_id', 'topic', 'created_at', 'votes', 'comment_count'];
+  if(!validSortQueries.includes(sort_by)) sort_by = 'created_at';
   return (
-    knex("comments")
-      .select("comments.article_id", "articles.article_id")
-      .count('articles.title AS comment_count')
-      .innerJoin("articles", "articles.article_id", "=", "comments.article_id")
-      .groupBy("articles.article_id", "comments.article_id","comments.created_at")
+    knex
+      .select("articles.article_id", "articles.title", "articles.votes", "articles.topic", "articles.author", "articles.created_at")
+      .from("articles")
+      .count({ comment_count: 'comments.comment_id'})
+      .leftJoin("comments", "articles.article_id", "comments.article_id")
+      .groupBy("articles.article_id")
       .orderBy(sort_by, order)
       .where(query => {
-        if (author) query.where({ author });
-        if (topic) query.where({ topic });
+        if (author) query.where({ 'articles.author': author });
+        if (topic) query.where({ 'articles.topic': topic });
       })
       
   );

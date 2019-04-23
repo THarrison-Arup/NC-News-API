@@ -15,25 +15,24 @@ exports.sendArticles = (req, res, next) => {
       else res.status(200).send({ articles });
     })
     .catch(err => {
-      next(err);
+      
+      console.log(err);
+      next(err)
     });
 };
 
 exports.sendArticleById = (req, res, next) => {
   fetchArticleById(req.params)
     .then(([article]) => {
-      console.log(article);
       if (!article) return Promise.reject({ status: 404 });
       else res.status(200).send({ article });
     })
     .catch(err => {
-      console.log(err, "<--ERROR");
       next(err);
     });
 };
 
 exports.updateArticleById = (req, res, next) => {
-  console.log(typeof req.body["inc_votes"]);
   if (typeof req.body["inc_votes"] !== "number") {
     return Promise.reject({ status: 404 });
   } else {
@@ -43,7 +42,6 @@ exports.updateArticleById = (req, res, next) => {
         else res.status(200).send({ article });
       })
       .catch(err => {
-        console.log(err.status, "<-- ERROR");
         next(err);
       });
   }
